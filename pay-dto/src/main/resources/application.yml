@@ -1,0 +1,47 @@
+server:
+  port: 9012
+spring:
+  application:
+    name: job
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ssm_finance_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: sansm1sfd9!Ac
+    hikari:
+          connection-timeout: 30000
+          maximum-pool-size: 50
+          minimum-idle: 5  
+  kafka:
+    consumer:
+      bootstrap-servers: 120.77.46.138:9008
+      group-id: job
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.finance.domain.dto.msg.serializer.MsgDeserializer
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.finance.domain.dto.msg.serializer.MsgSerializer
+      value-deserializer: com.finance.domain.dto.job.JobDeserializer
+      bootstrap-servers: 120.77.46.138:9008 
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+mybatis:
+    configuration:
+        map-underscore-to-camel-case: true
+        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+        call-setters-on-nulls: true
+        default-fetch-size: 100
+        default-statement-timeout: 30
+    mapper-locations: classpath:mapper/**/**/*.xml
+    type-handlers-package: org.apache.ibatis.type.LocalDateTypeHandler
+

@@ -1,0 +1,64 @@
+server:
+  port: 7016
+rocketmq:
+  nameServerAddress: 47.92.29.189:9876
+  producerGroup: shop
+logging:
+  level:
+    org.springframework: INFO
+    com.ssm: DEBUG
+#热部署生效
+spring.devtools.restart.enabled: true
+spring:
+  application:
+    name: job
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ssm-shop?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=CTT&allowMultiQueries=true
+    username: root
+    password: 1234
+    hikari:
+          connection-timeout: 30000
+          maximum-pool-size: 10
+          minimum-idle: 1
+  kafka:
+    consumer:
+      bootstrap-servers: 120.77.46.138:9008
+      group-id: job
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      auto-commit-interval: 100
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.finance.domain.dto.msg.serializer.MsgDeserializer
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.finance.domain.dto.msg.serializer.MsgSerializer
+      value-deserializer: com.finance.domain.dto.job.JobDeserializer
+      bootstrap-servers: 120.77.46.138:9008
+  http:
+    multipart:
+      maxFileSize: 50Mb
+      maxRequestSize: 50Mb
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  redis:
+    port: 6379
+    database: 5
+    password: 3sm_redis
+    host: localhost
+mybatis:
+    configuration:
+        map-underscore-to-camel-case: true
+        log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+        call-setters-on-nulls: true
+        default-fetch-size: 100
+        default-statement-timeout: 30
+        use-generated-keys: true
+    mapper-locations: classpath:mapper/**/**/*.xml,classpath*:mapper/*.xml
+    type-handlers-package: org.apache.ibatis.type.LocalDateTypeHandler

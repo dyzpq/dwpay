@@ -1,0 +1,3 @@
+# Project exclude paths
+/pay-dto/target/
+/pay-manage-api/target/
