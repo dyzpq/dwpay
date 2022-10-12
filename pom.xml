@@ -34,7 +34,7 @@
         <hystrix-javanica>1.5.9</hystrix-javanica>
         <subSys.version>0.1.2</subSys.version>
         <log4j-over-slf4j>1.7.9</log4j-over-slf4j>
-        <shiro.version>1.3.2</shiro.version>
+        <shiro.version>1.10.0</shiro.version>
         <swagger.version>1.5.13</swagger.version>
         <lombok.version>1.18.10</lombok.version>
     </properties>
